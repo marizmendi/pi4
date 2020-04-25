@@ -14,4 +14,24 @@ services:
             - SYS_NICE
             - NET_RAW
         volumes:
-            - /data/suricata/log:/var/log/suricata
+            - rpi-data:/var/log/suricata
+
+    filebeat:
+        image: marizmendi/filebeat
+        environment:
+            - ES_HOST=192.168.1.110
+            - ES_PORT=9200
+            - KIBANA_HOST=192.168.1.110
+            - KIBANA_PORT=5601
+        volumes:
+            - rpi-data:/var/log/suricata
+        configs:
+            - source: filebeat
+              target: /go/src/github.com/elastic/beats/filebeat/filebeat.yml
+
+volumes:
+    rpi-data:
+
+configs:
+    filebeat:
+        file: config/filebeat.yml        
