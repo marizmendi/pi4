@@ -1,0 +1,16 @@
+# https://github.com/elastic/beats/blob/master/filebeat/filebeat.reference.yml
+
+filebeat.modules:
+  - module: suricata
+    eve:
+      enabled: true
+      var.paths: ["/var/log/suricata/eve.json"]
+
+output.elasticsearch:
+  hosts: ["${ES_HOST}:${ES_PORT}"]
+
+setup.dashboards:
+  enabled: true
+
+setup.kibana:
+  host: "${KIBANA_HOST}:${KIBANA_PORT}"
