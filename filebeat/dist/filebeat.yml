@@ -1,16 +1,13 @@
 # https://github.com/elastic/beats/blob/master/filebeat/filebeat.reference.yml
 
-filebeat.modules:
-  - module: suricata
-    eve:
-      enabled: true
-      var.paths: ["/var/log/suricata/eve.json"]
+filebeat.inputs:
+  - type: log
+    paths:
+      - /var/log/suricata/eve.json
+    json.message_key: message
+    json.keys_under_root: true
+    json.overwrite_keys: true
+
 
 output.elasticsearch:
   hosts: ["${ES_HOST}:${ES_PORT}"]
-
-setup.dashboards:
-  enabled: true
-
-setup.kibana:
-  host: "${KIBANA_HOST}:${KIBANA_PORT}"
