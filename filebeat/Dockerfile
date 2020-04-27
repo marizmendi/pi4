@@ -9,4 +9,5 @@ RUN ./filebeat test config
 FROM golang
 COPY --from=builder /go/src/github.com/elastic/beats/filebeat/filebeat /
 ADD dist/filebeat.yml /
+WORKDIR /
 CMD ["/filebeat"]

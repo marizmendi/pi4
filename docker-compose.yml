@@ -2,6 +2,7 @@ version: "3.8"
 
 services:
     suricata:
+        build: ./suricata/.
         image: marizmendi/suricata
         restart: always
         environment:
@@ -17,6 +18,7 @@ services:
             - rpi-data:/var/log/suricata
 
     filebeat:
+        build: ./filebeat/.
         image: marizmendi/filebeat
         environment:
             - ES_HOST=192.168.1.110
