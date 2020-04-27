@@ -1,4 +1,4 @@
-version: "3"
+version: "3.8"
 
 services:
     suricata:
@@ -15,6 +15,9 @@ services:
             - NET_RAW
         volumes:
             - rpi-data:/var/log/suricata
+        configs:
+            - source: suricata
+                target: /etc/suricata/suricata.yaml
 
     filebeat:
         image: marizmendi/filebeat
@@ -25,6 +28,15 @@ services:
             - KIBANA_PORT=5601
         volumes:
             - rpi-data:/var/log/suricata
+        configs:
+            - source: filebeat
+                target: /go/src/github.com/elastic/beats/filebeat/filebeat.yml
 
 volumes:
     rpi-data:
+
+configs:
+    filebeat:
+        file: config/filebeat.yml
+    suricata:
+        file: config/suricata.yml
