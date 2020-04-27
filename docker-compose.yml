@@ -17,7 +17,7 @@ services:
             - rpi-data:/var/log/suricata
         configs:
             - source: suricata
-                target: /etc/suricata/suricata.yaml
+              target: /etc/suricata/suricata.yaml
 
     filebeat:
         image: marizmendi/filebeat
@@ -30,7 +30,7 @@ services:
             - rpi-data:/var/log/suricata
         configs:
             - source: filebeat
-                target: /go/src/github.com/elastic/beats/filebeat/filebeat.yml
+              target: /go/src/github.com/elastic/beats/filebeat/filebeat.yml
 
 volumes:
     rpi-data:
