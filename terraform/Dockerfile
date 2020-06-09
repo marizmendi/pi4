@@ -1,0 +1,16 @@
+FROM golang:alpine
+
+RUN apk add --update git bash
+RUN go get github.com/tools/godep
+RUN go get github.com/hashicorp/terraform
+
+WORKDIR $GOPATH/src/github.com/hashicorp/terraform
+
+RUN godep restore -v .../.
+
+ENV TF_DEV=true
+
+RUN /bin/bash scripts/build.sh
+
+WORKDIR $GOPATH
+ENTRYPOINT ["bin/terraform"]
