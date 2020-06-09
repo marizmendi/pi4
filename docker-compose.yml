@@ -21,6 +21,7 @@ services:
             domain: arizxyz.com
         ports:
             - "443:443"
+        restart: on-failure
 volumes:
     certificate:
     state:
