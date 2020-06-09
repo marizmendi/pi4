@@ -1,5 +1,26 @@
-version: "3.8"
+version: "3"
 
 services:
-
+    terraform:
+        build: ./terraform
+        volumes:
+            - ./terraform:/terraform
+            - certificate:/certificate
+            - state:/state
+        environment:
+            CLOUDFLARE_API_TOKEN: dvfXnHsLHMJXSSSHj6RNDMpmqln1zYLCHjOX_nxR
+            CLOUDFLARE_API_USER_SERVICE_KEY: v1.0-0693d36f7b15670642333ffe-d2e25f78ee9da3247f31237f8689d3a83d9cbe4b4f28176e0b80bbbf328ded7ea350b744b5b330ff7f9bb40a374ba131167333a66b99c55a629ef8dd3f51a2c495411e23b9fd4eef
+            TF_VAR_domain: arizxyz.com
+        entrypoint: "sh /terraform/entrypoint.sh"
+    nginx:
+        image: nginx:stable
+        volumes:
+            - ./nginx:/etc/nginx/conf.d
+            - certificate:/etc/certificate
+        environment:
+            domain: arizxyz.com
+        ports:
+            - "443:443"
 volumes:
+    certificate:
+    state:

@@ -1,16 +1,10 @@
 FROM golang:alpine
 
-RUN apk add --update git bash
-RUN go get github.com/tools/godep
-RUN go get github.com/hashicorp/terraform
+ARG version=0.12.26
 
-WORKDIR $GOPATH/src/github.com/hashicorp/terraform
+RUN wget https://releases.hashicorp.com/terraform/${version}/terraform_${version}_linux_arm.zip
+RUN unzip terraform_${version}_linux_arm.zip
+RUN rm terraform_${version}_linux_arm.zip
+RUN rm -rf bin src
 
-RUN godep restore -v .../.
-
-ENV TF_DEV=true
-
-RUN /bin/bash scripts/build.sh
-
-WORKDIR $GOPATH
-ENTRYPOINT ["bin/terraform"]
+ENTRYPOINT ["./terraform"]
