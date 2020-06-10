@@ -1,4 +1,9 @@
 cd /terraform
 
-/go/terraform init;
-/go/terraform apply -auto-approve;
+/bin/terraform init;
+
+while true
+do
+    /bin/terraform apply -auto-approve;
+    sleep 300s
+done

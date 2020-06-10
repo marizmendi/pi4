@@ -4,7 +4,7 @@ terraform {
   }
 }
 
-variable "domain" {}
+variable "host" {}
 
 provider "cloudflare" {
   version = "~> 2.0"
@@ -21,13 +21,13 @@ resource "tls_cert_request" "ca" {
 
   subject {
     common_name  = ""
-    organization = var.domain
+    organization = var.host
   }
 }
 
 resource "cloudflare_origin_ca_certificate" "ca" {
   csr                = tls_cert_request.ca.cert_request_pem
-  hostnames          = [ var.domain, "www.${var.domain}" ]
+  hostnames          = [ var.host, "www.${var.host}" ]
   request_type       = "origin-rsa"
   requested_validity = 365
 }
