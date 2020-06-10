@@ -1,0 +1,8 @@
+use=web, web=dynamicdns.park-your-domain.com/getip
+ssl=yes
+
+protocol=cloudflare
+login=$CLOUDFLARE_EMAIL
+password=$CLOUDFLARE_API_KEY
+zone=$HOST
+$HOST, www.$HOST
