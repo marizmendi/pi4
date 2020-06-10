@@ -16,7 +16,7 @@ services:
             - certificate:/etc/certificate
         ports:
             - "443:443"
-        restart: on-failure
+        restart: always
     ddclient:
         build: ./ddclient
         volumes:
