@@ -10,20 +10,35 @@ services:
         env_file: ./terraform/.env
         entrypoint: "sh /terraform/entrypoint.sh"
     nginx:
-        image: nginx:stable
+        image: nginx
         volumes:
-            - ./nginx:/etc/nginx/conf.d
+            - ./nginx:/etc/nginx/templates
             - certificate:/etc/certificate
+        environment:
+            HOST: "node"
+            PORT: "8000"
         ports:
             - "443:443"
         restart: always
+        networks:
+            - app
     ddclient:
         build: ./ddclient
         volumes:
             - ./ddclient:/ddclient
         env_file: ./ddclient/.env
         entrypoint: "sh /ddclient/entrypoint.sh"
+    node:
+        build: ./node
+        volumes:
+            - ./node:/node
+        entrypoint: "sh /node/entrypoint.sh"
+        networks:
+            - app
 
 volumes:
     certificate:
     state:
+
+networks:
+    app:
