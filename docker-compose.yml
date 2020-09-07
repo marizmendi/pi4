@@ -1,32 +1,22 @@
-version: "3.8"
+version: "3"
 
 services:
-    suricata:
-        build: ./suricata/.
-        image: marizmendi/suricata
-        restart: always
-        environment:
-        # For ET Pro ruleset replace "OPEN" with your OINKCODE
-            - OINKCODE=OPEN
-            - INTERFACE=wg0
-        network_mode: "host"
-        cap_add:
-            - NET_ADMIN
-            - SYS_NICE
-            - NET_RAW
-        volumes:
-            - rpi-data:/var/log/suricata
-
-    filebeat:
-        build: ./filebeat/.
-        image: marizmendi/filebeat
-        environment:
-            - ES_HOST=192.168.1.110
-            - ES_PORT=9200
-            - KIBANA_HOST=192.168.1.110
-            - KIBANA_PORT=5601
-        volumes:
-            - rpi-data:/var/log/suricata
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "67:67/udp"
+      - "80:80/tcp"
+      - "443:443/tcp"
+    environment:
+      TZ: 'America/Chicago'
+    volumes:
+      - etc-pihole:/etc/pihole/'
+      - etc-dnsmasqd:/etc/dnsmasq.d/'
+    restart: unless-stopped
 
 volumes:
-    rpi-data:
+    etc-pihole:
+    etc-dnsmasqd:
