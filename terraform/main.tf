@@ -43,3 +43,9 @@ resource "local_file" "certificate" {
     filename = "/certificate/certificate.pem"
     file_permission = "0444"
 }
+
+resource "null_resource" "cloudflare_certificate" {
+  provisioner "local-exec" {
+    command = "wget -O /certificate/origin-pull-ca.pem https://support.cloudflare.com/hc/en-us/article_attachments/360044928032/origin-pull-ca.pem"
+  }
+}
