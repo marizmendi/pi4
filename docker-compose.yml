@@ -32,7 +32,7 @@ services:
         env_file: ./ddclient/.env
         entrypoint: "sh /ddclient/entrypoint.sh"
     node:
-        build: ./node
+        image: node:lts-alpine
         volumes:
             - ./node:/node
         entrypoint: "sh /node/entrypoint.sh"
