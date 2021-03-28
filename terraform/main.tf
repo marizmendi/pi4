@@ -2,13 +2,18 @@ terraform {
   backend "local" {
     path = "/state/terraform.tfstate"
   }
+
+  required_providers {
+    cloudflare = {
+      source = "cloudflare/cloudflare"
+      version = "~> 2.0"
+    }
+  }
 }
 
 variable "host" {}
 
-provider "cloudflare" {
-  version = "~> 2.0"
-}
+provider "cloudflare" {}
 
 # Create a CSR and generate a CA certificate
 resource "tls_private_key" "ca" {

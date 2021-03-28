@@ -1,5 +1,7 @@
 cd /ddclient
 
+mkdir -p /etc/ddclient/
+
 envsubst < "ddclient.conf.template" > "/etc/ddclient/ddclient.conf"
 
 while true
