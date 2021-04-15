@@ -5,9 +5,7 @@ metadata:
 data:
   main.tf: |
     terraform {
-      backend "local" {
-        path = "/state/terraform.tfstate"
-      }
+      backend "local" {}
 
       required_providers {
         cloudflare = {

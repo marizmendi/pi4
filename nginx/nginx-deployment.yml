@@ -24,6 +24,8 @@ spec:
         volumeMounts:
           - mountPath: /etc/nginx/templates/
             name: nginx
+          - mountPath: /etc/certificate
+            name: certificate
         env:
         - name: HOST
           value: node
@@ -33,3 +35,6 @@ spec:
       - name: nginx
         configMap:
           name: nginx
+      - name: certificate
+        persistentVolumeClaim:
+          claimName: certificate

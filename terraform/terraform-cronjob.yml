@@ -24,15 +24,27 @@ spec:
                   key: origin_ca_key
             - name: TF_VAR_host
               value: arizxyz.com
+            - name: TF_DATA_DIR
+              value: /state
             command:
             - /bin/sh
             - -c
-            - while true; do sleep 30; done;
+            - cp -r /tmp/terraform /; cd terraform; terraform init; terraform apply -auto-approve;
             volumeMounts:
             - mountPath: /tmp/terraform
               name: terraform
+            - mountPath: /certificate
+              name: certificate
+            - mountPath: /state
+              name: state
           volumes:
             - name: terraform
               configMap:
                 name: terraform
+            - name: certificate
+              persistentVolumeClaim:
+                claimName: certificate
+            - name: state
+              persistentVolumeClaim:
+                claimName: state
           restartPolicy: OnFailure
