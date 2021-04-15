@@ -14,20 +14,21 @@ spec:
     spec:
       containers:
       - name: node
-        image: node
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
+        image: node:lts-alpine
+        # resources:
+        #   limits:
+        #     memory: "128Mi"
+        #     cpu: "500m"
         ports:
         - containerPort: 80
-      #   volumeMounts:
-      #     - mountPath: /app/
-      #       name: node-app
-      # volumes:
-      # - name: node-app
-      #   configMap:
-      #     name: app.conf.template
-      #     items:
-      #       - key: app.conf.template
-      #         path: app.conf.template
+        command:
+          - /bin/sh
+          - -c
+          - cp -r /tmp/app /; cd app; npm install; npm start
+        volumeMounts:
+          - mountPath: /tmp/app/
+            name: node
+      volumes:
+      - name: node
+        configMap:
+          name: node

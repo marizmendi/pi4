@@ -19,4 +19,8 @@ data:
       response.end(message);
     });
 
-    server.listen(8000);
+    server.listen(80);
+  package-lock.json: |
+    {
+      "lockfileVersion": 1
+    }
