@@ -1,0 +1,38 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: terraform
+spec:
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: terraform
+            image: marizmendi/terraform
+            env:
+            - name: CLOUDFLARE_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflare
+                  key: token_terraform
+            - name: CLOUDFLARE_API_USER_SERVICE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflare
+                  key: origin_ca_key
+            - name: TF_VAR_host
+              value: arizxyz.com
+            command:
+            - /bin/sh
+            - -c
+            - while true; do sleep 30; done;
+            volumeMounts:
+            - mountPath: /tmp/terraform
+              name: terraform
+          volumes:
+            - name: terraform
+              configMap:
+                name: terraform
+          restartPolicy: OnFailure

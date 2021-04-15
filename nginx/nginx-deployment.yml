@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+        volumeMounts:
+          - mountPath: /etc/nginx/templates/
+            name: nginx
+        env:
+        - name: HOST
+          value: node
+        - name: PORT
+          value: "80"
+      volumes:
+      - name: nginx
+        configMap:
+          name: nginx
