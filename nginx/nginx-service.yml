@@ -5,8 +5,9 @@ metadata:
   labels:
     app: nginx
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
   - port: 443
+    nodePort: 30443
   selector:
     app: nginx
