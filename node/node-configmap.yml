@@ -11,15 +11,16 @@ data:
       }
     }
   index.js: |
-    var http = require('http');
+    const http = require('http');
 
-    var server = http.createServer(function (request, response) {
-      response.writeHead(200, {"Content-Type": "text/plain"});
-      message = request.headers["x-forwarded-for"]
-      response.end(message);
-    });
+    const requestListener = function (req, res) {
+      res.writeHead(200, {"Content-Type": "text/plain"});
+      res.end(req.headers["cf-connecting-ip"]);
+    }
 
+    const server = http.createServer(requestListener);
     server.listen(80);
+
   package-lock.json: |
     {
       "lockfileVersion": 1
