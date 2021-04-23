@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: terraform
 spec:
-  schedule: "*/30 * * * *"
+  schedule: "0 0 * * *"
   jobTemplate:
     spec:
       template:
