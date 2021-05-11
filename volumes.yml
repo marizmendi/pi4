@@ -7,7 +7,7 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: 100Mi
+      storage: 64Ki
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -18,15 +18,4 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: 100Mi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: homebridge
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 500Mi
+      storage: 64Ki
