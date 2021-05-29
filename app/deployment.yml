@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: app
-        image: marizmendi/app
+        image: marizmendi/app:latest
         resources:
           limits:
             memory: "128Mi"
