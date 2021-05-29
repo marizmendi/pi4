@@ -13,22 +13,11 @@ spec:
         app: app
     spec:
       containers:
-      - name: node
-        image: node:lts-alpine
+      - name: app
+        image: marizmendi/app
         resources:
           limits:
             memory: "128Mi"
             cpu: "500m"
         ports:
         - containerPort: 80
-        command:
-          - /bin/sh
-          - -c
-          - cp -r /tmp/app /; cd app; npm install; npm start
-        volumeMounts:
-          - mountPath: /tmp/app/
-            name: app
-      volumes:
-      - name: app
-        configMap:
-          name: node
