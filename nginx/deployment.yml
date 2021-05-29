@@ -28,7 +28,7 @@ spec:
             name: certificate
         env:
         - name: HOST
-          value: node
+          value: app
         - name: PORT
           value: "80"
       volumes:
