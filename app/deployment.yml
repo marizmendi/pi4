@@ -27,8 +27,8 @@ spec:
           - cp -r /tmp/app /; cd app; npm install; npm start
         volumeMounts:
           - mountPath: /tmp/app/
-            name: node
+            name: app
       volumes:
-      - name: node
+      - name: app
         configMap:
           name: node
