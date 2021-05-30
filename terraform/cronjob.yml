@@ -3,6 +3,7 @@ kind: CronJob
 metadata:
   name: terraform
 spec:
+  concurrencyPolicy: Forbid
   schedule: "0 0 * * *"
   jobTemplate:
     spec:
