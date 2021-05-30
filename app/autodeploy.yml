@@ -37,7 +37,7 @@ metadata:
   name: autodeploy
 spec:
   concurrencyPolicy: Forbid
-  schedule: "0 * * * *"
+  schedule: '*/10 * * * *'
   jobTemplate:
     spec:
       template:
