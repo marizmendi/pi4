@@ -4,7 +4,6 @@ kind: ServiceAccount
 apiVersion: v1
 metadata:
   name: autocert
-  namespace: default
 ---
 # allow getting status and patching only the one deployment you want
 # to restart
@@ -12,7 +11,6 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: autocert
-  namespace: default
 rules:
   - apiGroups: [""]
     resources: ["secrets"]
@@ -27,7 +25,6 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: autocert
-  namespace: default
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -35,14 +32,12 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: autocert
-    namespace: default
 ---
 # create the cronjob to create the tls secrets
 apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: autocert-tls
-  namespace: default
 spec:
   concurrencyPolicy: Forbid
   schedule: "0 * * * *"
@@ -70,7 +65,6 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: autocert-client
-  namespace: default
 spec:
   concurrencyPolicy: Forbid
   schedule: "0 * * * *"

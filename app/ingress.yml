@@ -3,7 +3,6 @@ kind: Ingress
 metadata:
   name: app
   annotations:
-    # use the shared ingress-nginx
     kubernetes.io/ingress.class: public
     nginx.ingress.kubernetes.io/auth-tls-secret: default/cloudflare-client
     nginx.ingress.kubernetes.io/auth-tls-verify-client: 'on'
