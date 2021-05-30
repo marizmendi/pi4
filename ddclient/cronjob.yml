@@ -10,7 +10,7 @@ spec:
         spec:
           containers:
           - name: ddclient
-            image: marizmendi/ddclient
+            image: marizmendi/ddclient:latest
             env:
             - name: CLOUDFLARE_EMAIL
               value: manmar92@gmail.com

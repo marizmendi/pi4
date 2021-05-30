@@ -10,7 +10,7 @@ spec:
         spec:
           containers:
           - name: terraform
-            image: marizmendi/terraform
+            image: marizmendi/terraform:latest
             env:
             - name: CLOUDFLARE_API_TOKEN
               valueFrom:

@@ -51,7 +51,7 @@ spec:
           restartPolicy: Never
           containers:
             - name: kubectl
-              image: bitnami/kubectl
+              image: marizmendi/kubectl:latest
               command:
                 - 'kubectl'
                 - 'rollout'
