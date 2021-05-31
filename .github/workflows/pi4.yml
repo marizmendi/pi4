@@ -18,4 +18,4 @@ jobs:
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          args: '"apply -f . --recursive"'
+          args: '"apply -f app -f cloudflare -f ddclient -f github -f terraform"'
