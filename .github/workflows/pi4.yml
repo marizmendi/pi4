@@ -1,0 +1,21 @@
+name: pi4
+
+on:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+      -
+        name: Kubernetes CLI - kubectl
+        uses: steebchen/kubectl@v1.0.0
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        with:
+          args: '"apply -f . --recursive"'
