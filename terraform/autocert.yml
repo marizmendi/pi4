@@ -40,7 +40,7 @@ metadata:
   name: autocert-tls
 spec:
   concurrencyPolicy: Forbid
-  schedule: '@hourly'
+  schedule: '@midnight'
   jobTemplate:
     spec:
       template:
@@ -67,7 +67,7 @@ metadata:
   name: autocert-client
 spec:
   concurrencyPolicy: Forbid
-  schedule: '@hourly'
+  schedule: '@midnight'
   jobTemplate:
     spec:
       template:
