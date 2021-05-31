@@ -1,0 +1,51 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: terraform
+spec:
+  concurrencyPolicy: Forbid
+  schedule: '@midnight'
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: terraform
+            image: marizmendi/terraform:latest
+            env:
+            - name: CLOUDFLARE_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflare
+                  key: token_terraform
+            - name: CLOUDFLARE_API_USER_SERVICE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflare
+                  key: origin_ca_key
+            - name: TF_VAR_host
+              value: arizxyz.com
+            - name: TF_DATA_DIR
+              value: /state
+            command:
+            - /bin/sh
+            - -c
+            - cp -r /tmp/terraform /; cd terraform; terraform init; terraform apply -auto-approve;
+            volumeMounts:
+            - mountPath: /tmp/terraform
+              name: terraform
+            - mountPath: /certificate
+              name: certificate
+            - mountPath: /state
+              name: state
+          volumes:
+            - name: terraform
+              configMap:
+                name: terraform
+            - name: certificate
+              persistentVolumeClaim:
+                claimName: certificate
+            - name: state
+              persistentVolumeClaim:
+                claimName: state
+          restartPolicy: OnFailure

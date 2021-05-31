@@ -1,0 +1,88 @@
+# Service account the client will use to reset the deployment,
+# by default the pods running inside the cluster can do no such things.
+kind: ServiceAccount
+apiVersion: v1
+metadata:
+  name: autocert
+---
+# allow getting status and patching only the one deployment you want
+# to restart
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: autocert
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["create"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    resourceNames: ["cloudflare-tls", "cloudflare-client"]
+    verbs: ["get", "update", "patch"]
+---
+# bind the role to the service account
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: autocert
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: autocert
+subjects:
+  - kind: ServiceAccount
+    name: autocert
+---
+# create the cronjob to create the tls secrets
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: autocert-tls
+spec:
+  concurrencyPolicy: Forbid
+  schedule: '@hourly'
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: autocert
+          restartPolicy: Never
+          containers:
+            - name: kubectl
+              image: marizmendi/kubectl:latest
+              command: ["/bin/sh"]
+              args: ["-c", "kubectl create secret tls cloudflare-tls --save-config --dry-run=client --key /certificate/privkey.pem --cert /certificate/certificate.pem -o yaml | kubectl apply -f -"]
+              volumeMounts:
+                - mountPath: /certificate
+                  name: certificate
+          volumes:
+            - name: certificate
+              persistentVolumeClaim:
+                claimName: certificate
+---
+# create the cronjob to create the client secrets
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: autocert-client
+spec:
+  concurrencyPolicy: Forbid
+  schedule: '@hourly'
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: autocert
+          restartPolicy: Never
+          containers:
+            - name: kubectl
+              image: marizmendi/kubectl:latest
+              command: ["/bin/sh"]
+              args: ["-c", "kubectl create secret generic cloudflare-client --save-config --dry-run=client --from-file=ca.crt=/certificate/origin-pull-ca.pem -o yaml | kubectl apply -f -"]
+              volumeMounts:
+                - mountPath: /certificate
+                  name: certificate
+          volumes:
+            - name: certificate
+              persistentVolumeClaim:
+                claimName: certificate

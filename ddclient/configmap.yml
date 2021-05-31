@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ddclient
+data:
+  ddclient.conf.template: |
+    use=web, web=dynamicdns.park-your-domain.com/getip
+    ssl=yes
+
+    protocol=cloudflare
+    login=$CLOUDFLARE_EMAIL
+    password=$CLOUDFLARE_API_KEY
+    zone=$HOST
+    $HOST, www.$HOST

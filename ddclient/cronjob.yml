@@ -1,0 +1,36 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: ddclient
+spec:
+  concurrencyPolicy: Forbid
+  schedule: '@hourly'
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: ddclient
+            image: marizmendi/ddclient:latest
+            env:
+            - name: CLOUDFLARE_EMAIL
+              value: manmar92@gmail.com
+            - name: CLOUDFLARE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflare
+                  key: global_api_key
+            - name: HOST
+              value: arizxyz.com
+            command:
+            - /bin/sh
+            - -c
+            - mkdir /etc/ddclient/; envsubst < "/tmp/ddclient/ddclient.conf.template" > "/etc/ddclient/ddclient.conf"; /bin/ddclient --cache /var/cache/ddclient.cache
+            volumeMounts:
+            - mountPath: /tmp/ddclient
+              name: ddclient
+          volumes:
+            - name: ddclient
+              configMap:
+                name: ddclient
+          restartPolicy: OnFailure
