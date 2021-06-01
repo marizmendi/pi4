@@ -7,6 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/auth-tls-secret: default/cloudflare-client
     nginx.ingress.kubernetes.io/auth-tls-verify-client: 'on'
     nginx.ingress.kubernetes.io/rewrite-target: /$2
+    # nginx.ingress.kubernetes.io/app-root: /
     nginx.ingress.kubernetes.io/configuration-snippet: |
       real_ip_header CF-Connecting-IP;
       set_real_ip_from 0.0.0.0/0;
@@ -19,7 +20,7 @@ spec:
   - host: arizxyz.com
     http:
       paths:
-      - path: /game/
+      - path: /game(/|$)(.*)
         pathType: Prefix
         backend:
           service:
