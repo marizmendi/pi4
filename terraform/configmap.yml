@@ -38,7 +38,7 @@ data:
       csr                = tls_cert_request.ca.cert_request_pem
       hostnames          = [ var.host, "www.${var.host}" ]
       request_type       = "origin-rsa"
-      requested_validity = 2
+      requested_validity = 7
     }
 
     resource "local_file" "private_key" {
