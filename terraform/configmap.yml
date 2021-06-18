@@ -55,6 +55,6 @@ data:
 
     resource "null_resource" "cloudflare_certificate" {
       provisioner "local-exec" {
-        command = "wget -O /certificate/origin-pull-ca.pem https://support.cloudflare.com/hc/en-us/article_attachments/360044928032/origin-pull-ca.pem"
+        command = "wget -O- https://raw.githubusercontent.com/cloudflare/cloudflare-docs/production/products/ssl/src/content/origin-configuration/authenticated-origin-pull.md | sed -n '/### Zone-Level — Cloudflare certificates/,/### Zone-Level — customer certificates/p' | sed -n '/-----BEGIN CERTIFICATE-----/,/-----END CERTIFICATE-----/p' > origin-pull-ca.pem"
       }
     }
