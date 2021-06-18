@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: game
-        image: marizmendi/2048:latest
+        image: marizmendi/game:latest
         resources:
           limits:
             memory: "128Mi"
