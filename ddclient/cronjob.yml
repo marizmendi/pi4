@@ -10,12 +10,12 @@ spec:
       template:
         spec:
           containers:
-          - name: ddclient
+          - name: ddclient-cloudflare
             image: marizmendi/ddclient:latest
             env:
-            - name: CLOUDFLARE_EMAIL
+            - name: DDCLIENT_LOGIN
               value: manmar92@gmail.com
-            - name: CLOUDFLARE_API_KEY
+            - name: DDCLIENT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: cloudflare
@@ -25,7 +25,26 @@ spec:
             command:
             - /bin/sh
             - -c
-            - mkdir /etc/ddclient/; envsubst < "/tmp/ddclient/ddclient.conf.template" > "/etc/ddclient/ddclient.conf"; /bin/ddclient --cache /var/cache/ddclient.cache
+            - mkdir /etc/ddclient/; envsubst < "/tmp/ddclient/cloudflare.conf.template" > "/etc/ddclient/ddclient.conf"; /bin/ddclient --cache /var/cache/ddclient.cache
+            volumeMounts:
+            - mountPath: /tmp/ddclient
+              name: ddclient
+          - name: ddclient-namecheap
+            image: marizmendi/ddclient:latest
+            env:
+            - name: DDCLIENT_LOGIN
+              value: ariz.xyz
+            - name: DDCLIENT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: namecheap
+                  key: password
+            - name: HOST
+              value: chicago
+            command:
+            - /bin/sh
+            - -c
+            - mkdir /etc/ddclient/; envsubst < "/tmp/ddclient/namecheap.conf.template" > "/etc/ddclient/ddclient.conf"; /bin/ddclient --cache /var/cache/ddclient.cache
             volumeMounts:
             - mountPath: /tmp/ddclient
               name: ddclient

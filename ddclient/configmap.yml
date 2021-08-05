@@ -3,12 +3,21 @@ kind: ConfigMap
 metadata:
   name: ddclient
 data:
-  ddclient.conf.template: |
+  cloudflare.conf.template: |
     use=web, web=dynamicdns.park-your-domain.com/getip
     ssl=yes
 
     protocol=cloudflare
-    login=$CLOUDFLARE_EMAIL
-    password=$CLOUDFLARE_API_KEY
+    login=$DDCLIENT_LOGIN
+    password=$DDCLIENT_PASSWORD
     zone=$HOST
     $HOST, www.$HOST
+
+  namecheap.conf.template: |
+    use=web, web=dynamicdns.park-your-domain.com/getip
+    ssl=yes
+
+    protocol=namecheap
+    login=$DDCLIENT_LOGIN
+    password=$DDCLIENT_PASSWORD
+    $HOST
