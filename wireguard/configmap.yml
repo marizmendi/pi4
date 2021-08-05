@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wireguard
+data:
+  wg0.conf.template: |
+    [Interface]
+    Address = 192.168.222.1/24
+    PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE; ip6tables -A FORWARD -i wg0 -j ACCEPT; ip6tables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+    PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE; ip6tables -D FORWARD -i wg0 -j ACCEPT; ip6tables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+    PrivateKey = $WIREGUARD_PRIVATE_KEY
+    ListenPort = 5555
+
+    [Peer] # Manu M1
+    PublicKey = s722TA+tPVMNwJJGjbJZQVjf2kf2QD6iJbQCbv1rIwQ=
+    AllowedIPs = 192.168.222.2/32
+
+    [Peer] # Manu iPhone
+    PublicKey = 0vdBmmBLXFgSy6F2J1l75X5L8P7cnwBWRw6RE13Ndkk=
+    AllowedIPs = 192.168.222.3/32
+
+    [Peer] # Maiky
+    PublicKey = QYqyjt3C7Uk9ffraKj7PEw2/LluB7egkC30P+qFV5l8=
+    AllowedIPs = 192.168.222.100/32
