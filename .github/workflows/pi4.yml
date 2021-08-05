@@ -15,7 +15,6 @@ jobs:
       -
         name: Kubernetes CLI - kubectl
         uses: steebchen/kubectl@v2.0.0
-        env:
-          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          args: '"apply -f app -f ddclient -f terraform -f game -f wireguard"'
+          config: ${{ secrets.KUBE_CONFIG_DATA }}
+          command: '"apply -f app -f ddclient -f terraform -f game -f wireguard"'
