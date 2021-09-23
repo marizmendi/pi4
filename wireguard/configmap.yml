@@ -15,9 +15,13 @@ data:
     PublicKey = s722TA+tPVMNwJJGjbJZQVjf2kf2QD6iJbQCbv1rIwQ=
     AllowedIPs = 192.168.222.2/32
 
-    [Peer] # Manu iPhone
+    [Peer] # Manu iPad
     PublicKey = 0vdBmmBLXFgSy6F2J1l75X5L8P7cnwBWRw6RE13Ndkk=
     AllowedIPs = 192.168.222.3/32
+    
+    [Peer] # Manu iPhone
+    PublicKey = YCzHlbwjXSF9pGukabZB1osdxle7gCPrVXEuSkWkGns=
+    AllowedIPs = 192.168.222.4/32
 
     [Peer] # Maiky
     PublicKey = QYqyjt3C7Uk9ffraKj7PEw2/LluB7egkC30P+qFV5l8=
