@@ -10,7 +10,7 @@ data:
       required_providers {
         cloudflare = {
           source = "cloudflare/cloudflare"
-          version = "~> 2.0"
+          version = "~> 3.0"
         }
       }
     }
@@ -55,6 +55,6 @@ data:
 
     resource "null_resource" "cloudflare_certificate" {
       provisioner "local-exec" {
-        command = "wget -O- https://raw.githubusercontent.com/cloudflare/cloudflare-docs/production/products/ssl/src/content/origin-configuration/authenticated-origin-pull.md | sed -n '/### Zone-Level — Cloudflare certificate/,/### Zone-Level — customer certificates/p' | sed -n '/-----BEGIN CERTIFICATE-----/,/-----END CERTIFICATE-----/p' > /certificate/origin-pull-ca.pem"
+        command = "wget -O- https://raw.githubusercontent.com/cloudflare/cloudflare-docs/production/products/ssl/src/content/origin-configuration/authenticated-origin-pull/set-up.md | sed -n '/-----BEGIN CERTIFICATE-----/,/-----END CERTIFICATE-----/p' > /certificate/origin-pull-ca.pem"
       }
     }
