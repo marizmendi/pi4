@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: wireguard
-        image: marizmendi/wireguard:latest
+        image: ghcr.io/marizmendi/wireguard:latest
         securityContext:
           capabilities:
             add:

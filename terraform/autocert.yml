@@ -49,7 +49,7 @@ spec:
           restartPolicy: Never
           containers:
             - name: kubectl
-              image: marizmendi/kubectl:latest
+              image: ghcr.io/marizmendi/kubectl:latest
               command: ["/bin/sh"]
               args: ["-c", "kubectl create secret tls cloudflare-tls --save-config --dry-run=client --key /certificate/privkey.pem --cert /certificate/certificate.pem -o yaml | kubectl apply -f -"]
               volumeMounts:
@@ -76,7 +76,7 @@ spec:
           restartPolicy: Never
           containers:
             - name: kubectl
-              image: marizmendi/kubectl:latest
+              image: ghcr.io/marizmendi/kubectl:latest
               command: ["/bin/sh"]
               args: ["-c", "kubectl create secret generic cloudflare-client --save-config --dry-run=client --from-file=ca.crt=/certificate/origin-pull-ca.pem -o yaml | kubectl apply -f -"]
               volumeMounts:

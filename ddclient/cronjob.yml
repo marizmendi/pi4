@@ -11,7 +11,7 @@ spec:
         spec:
           containers:
           - name: ddclient-cloudflare
-            image: marizmendi/ddclient:latest
+            image: ghcr.io/marizmendi/ddclient:latest
             env:
             - name: DDCLIENT_LOGIN
               value: manmar92@gmail.com
