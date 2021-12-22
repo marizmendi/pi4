@@ -41,11 +41,11 @@ spec:
           protocol: UDP
         resources:
           requests:
-            memory: "64Mi"
-            cpu: "100m"
-          limits:
-            memory: "128Mi"
+            memory: "512Mi"
             cpu: "200m"
+          limits:
+            memory: "1Gi"
+            cpu: "1"
       volumes:
         - name: wireguard
           configMap:
