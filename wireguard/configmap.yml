@@ -26,3 +26,7 @@ data:
     [Peer] # Maiky
     PublicKey = QYqyjt3C7Uk9ffraKj7PEw2/LluB7egkC30P+qFV5l8=
     AllowedIPs = 192.168.222.100/32
+    
+    [Peer] # Gmo iPhone
+    PublicKey = kIkkL1XEiMwWnvBlu45JGOai+hjmYjtMZ/aG+NGSKWA=
+    AllowedIPs = 192.168.222.200/32
