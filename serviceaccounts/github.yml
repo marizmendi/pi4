@@ -18,3 +18,11 @@ subjects:
   - kind: ServiceAccount
     namespace: default
     name: github
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: github-token
+  annotations:
+    kubernetes.io/service-account.name: github
+type: kubernetes.io/service-account-token
