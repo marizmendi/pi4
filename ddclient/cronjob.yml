@@ -40,7 +40,7 @@ spec:
                   name: namecheap
                   key: password
             - name: HOST
-              value: chicago
+              value: boston
             command:
             - /bin/sh
             - -c
