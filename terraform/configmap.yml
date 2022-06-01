@@ -25,7 +25,6 @@ data:
     }
 
     resource "tls_cert_request" "ca" {
-      key_algorithm   = tls_private_key.ca.algorithm
       private_key_pem = tls_private_key.ca.private_key_pem
 
       subject {
@@ -55,6 +54,6 @@ data:
 
     resource "null_resource" "cloudflare_certificate" {
       provisioner "local-exec" {
-        command = "wget -O- https://raw.githubusercontent.com/cloudflare/cloudflare-docs/production/products/ssl/src/content/origin-configuration/authenticated-origin-pull/set-up.md | sed -n '/-----BEGIN CERTIFICATE-----/,/-----END CERTIFICATE-----/p' > /certificate/origin-pull-ca.pem"
+        command = "wget -O- https://developers.cloudflare.com/ssl/static/authenticated_origin_pull_ca.pem > /certificate/origin-pull-ca.pem"
       }
     }

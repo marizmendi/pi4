@@ -30,7 +30,7 @@ spec:
             - mountPath: /tmp/ddclient
               name: ddclient
           - name: ddclient-namecheap
-            image: marizmendi/ddclient:latest
+            image: ghcr.io/marizmendi/ddclient:latest
             env:
             - name: DDCLIENT_LOGIN
               value: ariz.xyz
