@@ -17,16 +17,10 @@ jobs:
         uses: steebchen/kubectl@v2.0.0
         with:
           config: ${{ secrets.KUBE_CONFIG_DATA }}
-          command: $(ls enabled/ | xargs printf -- '-f enabled/%s\n')
+          command: apply $(ls enabled/ | xargs printf -- '-f enabled/%s\n')
       -
         name: Kubernetes CLI - kubectl
         uses: steebchen/kubectl@v2.0.0
         with:
           config: ${{ secrets.KUBE_CONFIG_DATA }}
           command: rollout restart deployment/app
-      -
-        name: Kubernetes CLI - kubectl
-        uses: steebchen/kubectl@v2.0.0
-        with:
-          config: ${{ secrets.KUBE_CONFIG_DATA }}
-          command: rollout restart deployment/wireguard
