@@ -17,7 +17,7 @@ jobs:
         uses: steebchen/kubectl@v2.0.0
         with:
           config: ${{ secrets.KUBE_CONFIG_DATA }}
-          command: apply -f wireguard -f app -f ddclient -f terraform
+          command: $(ls enabled/ | xargs printf -- '-f enabled/%s\n')
       -
         name: Kubernetes CLI - kubectl
         uses: steebchen/kubectl@v2.0.0
